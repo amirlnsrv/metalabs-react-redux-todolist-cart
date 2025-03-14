@@ -1,0 +1,9 @@
+.cart {
+	margin-top: 100px;
+
+	&Inner {
+		display: flex;
+		align-items: last baseline;
+		gap: 30px;
+	}
+}
