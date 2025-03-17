@@ -1,44 +1,85 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const loadLocalStorage = () => {
-  const data = localStorage.getItem("tasks");
-  if (data) {
-    return JSON.parse(data);
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { BASE_URL } from "../baseURL";
+import axios from "axios";
+
+export const fetchTasks = createAsyncThunk(
+  "todos/fetchTasks",
+  async (filter) => {
+    const { data } = await axios.get(
+      `${BASE_URL}/tasks${
+        filter !== "all" ? `?completed=${filter === "completed"}` : ""
+      }`
+    );
+    return data;
   }
-  return [];
-};
+);
 
-const saveToLocalStorage = (tasks) => {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-};
+export const addTask = createAsyncThunk("todos/addTask", async (text) => {
+  const { data } = await axios.post(`${BASE_URL}/tasks`, {
+    text,
+    completed: false,
+  });
+  return data;
+});
 
-const initState = {
-  tasks: loadLocalStorage(),
+export const removeTask = createAsyncThunk("todos/removeTask", async (id) => {
+  await axios.delete(`${BASE_URL}/tasks/${id}`);
+  return id;
+});
+
+export const toggleTask = createAsyncThunk("todos/toggleTask", async (task) => {
+  const updatedTask = { ...task, completed: !task.completed };
+  await axios.put(`${BASE_URL}/tasks/${task.id}`, {
+    ...updatedTask,
+  });
+  return updatedTask;
+});
+
+const initialState = {
+  tasks: [],
   filter: "all",
+  loading: false,
+  error: null,
 };
 
 const todoSlice = createSlice({
   name: "todos",
-  initialState: initState,
+  initialState,
   reducers: {
-    addTask(state, { payload }) {
-      state.tasks.push({ text: payload, completed: false });
-      saveToLocalStorage(state.tasks);
-    },
-    removeTask(state, { payload }) {
-      state.tasks = state.tasks.filter((_, i) => i !== payload);
-      saveToLocalStorage(state.tasks);
-    },
-    toggleTask(state, { payload }) {
-      state.tasks[payload].completed = !state.tasks[payload].completed;
-      saveToLocalStorage(state.tasks);
-    },
     setFilter(state, { payload }) {
       state.filter = payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTasks.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchTasks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tasks = action.payload;
+      })
+      .addCase(fetchTasks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(addTask.fulfilled, (state, action) => {
+        state.tasks.push(action.payload);
+      })
+      .addCase(removeTask.fulfilled, (state, action) => {
+        state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      })
+      .addCase(toggleTask.fulfilled, (state, action) => {
+        const index = state.tasks.findIndex(
+          (task) => task.id === action.payload.id
+        );
+        if (index !== -1) state.tasks[index] = action.payload;
+      });
+  },
 });
 
-export const { addTask, removeTask, toggleTask, setFilter } = todoSlice.actions;
+export const { setFilter } = todoSlice.actions;
 
 export default todoSlice.reducer;

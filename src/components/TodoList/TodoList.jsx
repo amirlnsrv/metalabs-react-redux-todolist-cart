@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchTasks,
   addTask,
   removeTask,
   setFilter,
@@ -8,13 +9,16 @@ import {
 
 import styles from "./TodoList.module.scss";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const TodoList = () => {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.todos.tasks);
-  const filter = useSelector((state) => state.todos.filter);
+  const { tasks, filter, loading } = useSelector((state) => state.todos);
   const [task, setTask] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchTasks(filter));
+  }, [dispatch, filter]);
 
   const handleAddTask = () => {
     if (task.trim()) {
@@ -22,12 +26,6 @@ export const TodoList = () => {
       setTask("");
     }
   };
-
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === "active") return !task.completed;
-    if (filter === "completed") return task.completed;
-    return true;
-  });
 
   return (
     <div className={styles.container}>
@@ -62,10 +60,10 @@ export const TodoList = () => {
       </div>
 
       <ul className={styles.list}>
-        {filteredTasks.map((t, index) => (
-          <li key={index} className={styles.listItem}>
+        {tasks.map((t) => (
+          <li key={t.id} className={styles.listItem}>
             <span
-              onClick={() => dispatch(toggleTask(index))}
+              onClick={() => dispatch(toggleTask(t))}
               style={{
                 textDecoration: t.completed ? "line-through" : "none",
                 cursor: "pointer",
@@ -74,7 +72,7 @@ export const TodoList = () => {
               {t.text}
             </span>
             <button
-              onClick={() => dispatch(removeTask(index))}
+              onClick={() => dispatch(removeTask(t.id))}
               className={styles.deleteButton}
             >
               ❌
