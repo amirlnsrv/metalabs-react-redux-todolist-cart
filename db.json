@@ -1,4 +1,91 @@
 {
-  "tasks": [],
-  "cart": []
+  "tasks": [
+    {
+      "id": "e479",
+      "text": "dsadasdasd",
+      "completed": false
+    }
+  ],
+  "cart": [
+    {
+      "id": "2",
+      "img": "https://i.postimg.cc/50ygb8Gz/promotion-Item2.png",
+      "title": "Смартфон Apple iPhone 12 64GB",
+      "price": 47756,
+      "quantity": 1
+    },
+    {
+      "id": "3",
+      "img": "https://i.postimg.cc/br2R2pqN/promotion-Item3.png",
+      "title": "Смартфон HUAWEI nova Y61",
+      "price": 14117,
+      "quantity": 1
+    },
+    {
+      "id": "1",
+      "img": "https://i.postimg.cc/tg2kKBry/promotion-Item1.png",
+      "title": "Смартфон Apple iPhone 14 128GB",
+      "price": 87999,
+      "quantity": 1
+    },
+    {
+      "id": "4",
+      "img": "https://i.postimg.cc/ZRQcRCtM/promotion-Item4.png",
+      "title": "Смартфон Xiaomi Redmi  128GB",
+      "price": 87999,
+      "quantity": 1
+    },
+    {
+      "id": "5",
+      "img": "https://i.postimg.cc/3W5FXVwj/promotion-Item5.png",
+      "title": "Смартфон Apple iPhone 14 128GB",
+      "price": 79999,
+      "quantity": 1
+    },
+    {
+      "id": "6",
+      "img": "https://i.postimg.cc/br2R2pqN/promotion-Item3.png",
+      "title": "Смартфон HUAWEI nova Y61",
+      "price": 14117,
+      "quantity": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "img": "https://i.postimg.cc/tg2kKBry/promotion-Item1.png",
+      "title": "Смартфон Apple iPhone 14 128GB",
+      "price": 87999
+    },
+    {
+      "id": "2",
+      "img": "https://i.postimg.cc/50ygb8Gz/promotion-Item2.png",
+      "title": "Смартфон Apple iPhone 12 64GB",
+      "price": 47756
+    },
+    {
+      "id": "3",
+      "img": "https://i.postimg.cc/br2R2pqN/promotion-Item3.png",
+      "title": "Смартфон HUAWEI nova Y61",
+      "price": 14117
+    },
+    {
+      "id": "4",
+      "img": "https://i.postimg.cc/ZRQcRCtM/promotion-Item4.png",
+      "title": "Смартфон Xiaomi Redmi  128GB",
+      "price": 87999
+    },
+    {
+      "id": "5",
+      "img": "https://i.postimg.cc/3W5FXVwj/promotion-Item5.png",
+      "title": "Смартфон Apple iPhone 14 128GB",
+      "price": 79999
+    },
+    {
+      "id": "6",
+      "img": "https://i.postimg.cc/br2R2pqN/promotion-Item3.png",
+      "title": "Смартфон HUAWEI nova Y61",
+      "price": 14117
+    }
+  ]
 }

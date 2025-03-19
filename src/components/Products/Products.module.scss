@@ -3,3 +3,23 @@
 	justify-content: space-between;
 	gap: 30px;
 }
+
+.pagination {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+
+	&Btn {
+		width: 41px;
+		height: 41px;
+		border: 1px solid;
+		background: none;
+	}
+
+	.active {
+		color: #fff;
+		background: #000;
+	}
+}
